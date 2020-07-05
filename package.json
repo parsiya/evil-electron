@@ -1,0 +1,23 @@
+{
+  "name": "evil-electron",
+  "version": "1.0.0",
+  "description": "Backdoored app.asar that spawns cmd.",
+  "main": "main.js",
+  
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/parsiya/evil-electron.git"
+  },
+  "author": "Parsia Hakimian",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/parsiya/evil-electron/issues"
+  },
+  "homepage": "https://github.com/parsiya/evil-electron#readme",
+  "devDependencies": {
+    "electron": "^9.0.5"
+  }
+}
