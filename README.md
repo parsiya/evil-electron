@@ -6,7 +6,7 @@ It spawns a command prompt. To change it, change [preload.js](preload.js).
 
 ## Usecase
 If you have a bundled Electron app you can replace the original `app.asar` with
-this app to get a cmd.
+this app to get a command prompt.
 
 ## Quickstart
 
@@ -26,8 +26,8 @@ git clone https://github.com/parsiya/evil-electron
 cd evil-electron
 # Install asar globally if it's not already installed
 npm install -g asar
-# Package the app into app.asar
-asar pack . release/app.asar --unpack-dir "{**/.git,**/release}" && rd "release/app.asar.unpacked" /s /q
+# Package the app into app.asar (modify for non-Windows OS)
+asar pack . release/app.asar --unpack-dir "{**/.git,**/release,**/node_modules}" && rd "release/app.asar.unpacked" /s /q
 # Copy release/app.asar to the place you want.
 ```
 
@@ -41,13 +41,13 @@ git clone https://github.com/parsiya/evil-electron
 cd evil-electron
 # Install dependencies
 npm install
-# Run the app to test it
+# Run the app to test it, you should see the command prompt
 npm start
 # Install asar globally if it's not already installed
 npm install -g asar
-# Package the app into app.asar
+# Package the app into app.asar (modify for non-Windows OS)
 asar pack . release/app.asar --unpack-dir "{**/.git,**/release,**/node_modules}" && rd "release/app.asar.unpacked" /s /q
-# Copy release/app.asar to the place you want
+# Copy release/app.asar to `resources/app.asar` for your target application
 ```
 
 ## Troubleshooting
@@ -59,23 +59,26 @@ and the [Writing Your First Electron App][first-electron] article.
 ## Questions
 
 ### My app.asar is Too Big
-Did you exclude `node_modules` from the `asar pack` command?
+
+1. Did you exclude `node_modules` from the `asar pack` command?
+2. Did you delete the old `app.asar` file? The asar command will append data to existing files.
 
 ### Only Works on Windows
 Yes. Detecting the OS and popping the equivalent of cmd on other operating
-systems is left as an exercise to the reader. Please create a pull request if
-you do so.
+systems is ~~left as an exercise to the reader~~ is tracked in
+[issue #1](https://github.com/parsiya/evil-electron/issues/1). Please create a
+pull request if you do so before I do it.
 
 ### I Cannot `asar extract` the Release File
-Yes, `asar` for some reason likes to still reference the excluded files and
-keeps them in the `app.asar.unpacked` directory. We delete this directory with
-our `asar pack` command but `asar extract` needs this directory to extract
-things properly.
+Yes, `asar` for some reason likes to reference the excluded files and keeps them
+in the `app.asar.unpacked` directory. We delete this directory with our
+`asar pack` command but `asar extract` needs this directory to extract things
+properly. If you know how to fix this please let me know.
 
 ### Should I Also Copy the `app.asar.unpacked` Directory?
 No. These are excluded files that are not needed for the application.
 
-### I Want to Make a Standalone Electron application
+### I Want Package and Make a Standalone Electron Application
 See https://www.electronjs.org/docs/tutorial/application-distribution.
 
 ### Do I Need `nodeIntegration`?
@@ -83,6 +86,6 @@ No. We are doing our spawn in `preload.js`. This file has almost complete access
 to the Node APIs.
 
 ## License
-MIT, see [LICENSE](LICENSE) for details. The original project ise licensed under
+MIT, see [LICENSE](LICENSE) for details. The original project is licensed under
 `CC0 1.0 (Public Domain)`. I felt like the hamburglar after changing the
 license.
