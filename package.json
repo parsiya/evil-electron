@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Backdoored app.asar that spawns cmd.",
   "main": "main.js",
-  
   "scripts": {
     "start": "electron ."
   },
