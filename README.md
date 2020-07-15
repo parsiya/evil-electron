@@ -56,18 +56,27 @@ and the [Writing Your First Electron App][first-electron] article.
 
 [first-electron]: https://www.electronjs.org/docs/tutorial/first-app
 
-## Questions
-
 ### My app.asar is Too Big
 
 1. Did you exclude `node_modules` from the `asar pack` command?
 2. Did you delete the old `app.asar` file? The asar command will append data to existing files.
 
 ### Only Works on Windows
-Yes. Detecting the OS and popping the equivalent of cmd on other operating
-systems is ~~left as an exercise to the reader~~ is tracked in
-[issue #1](https://github.com/parsiya/evil-electron/issues/1). Please create a
-pull request if you do so before I do it.
+Yes. [issue #1](https://github.com/parsiya/evil-electron/issues/1) fixes some of
+this problem. I do not have a Mac so I have not tested that part. The Linux
+version just calls `gnome-terminal` which is problematic but
+[issue #2](https://github.com/parsiya/evil-electron/issues/2) is looking for a
+universal command.
+
+### "The SUID sandbox helper binary was found, but is not configured correctly"
+This happens after `npm start`. Run these commands:
+
+```
+sudo chown root /path/to/evil-electron/node_modules/electron/dist/chrome-sandbox
+sudo chmod 4755 /path/to/evil-electron/node_modules/electron/dist/chrome-sandbox
+```
+
+Source: https://github.com/electron/electron/issues/17972#issuecomment-487369441
 
 ### I Cannot `asar extract` the Release File
 Yes, `asar` for some reason likes to reference the excluded files and keeps them
@@ -76,9 +85,10 @@ in the `app.asar.unpacked` directory. We delete this directory with our
 properly. If you know how to fix this please let me know.
 
 ### Should I Also Copy the `app.asar.unpacked` Directory?
-No. These are excluded files that are not needed for the application.
+No. These are excluded files that are not needed for the application. If you run
+the commands above it should have been deleted.
 
-### I Want Package and Make a Standalone Electron Application
+### I Want to Package and Make a Standalone Electron Application
 See https://www.electronjs.org/docs/tutorial/application-distribution.
 
 ### Do I Need `nodeIntegration`?

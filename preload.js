@@ -4,7 +4,7 @@ var platform = require('process').platform;
 // Commands
 const win32Command = "start cmd.exe";
 const darwinCommand = "'/System/Applications/Terminal.app/Contents/MacOS/Terminal',function(){}";
-const linuxCommand = "/bin/bash";
+const linuxCommand = "gnome-terminal"; // Issue#2: Find a `universal` Linux command.
 
 var command = "";
 
@@ -30,9 +30,3 @@ if (command === "") {
     // Spawn a command prompt.
     require('child_process').exec(command);
 }
-
-
-
-
-
-
