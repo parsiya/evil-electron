@@ -1,5 +1,5 @@
 // Detect the operating system.
-import { platform } from "process";
+var platform = require('process').platform;
 
 // Commands
 const win32Command = "start cmd.exe";
@@ -7,6 +7,8 @@ const darwinCommand = "'/System/Applications/Terminal.app/Contents/MacOS/Termina
 const linuxCommand = "/bin/bash";
 
 var command = "";
+
+console.log(`Running on ${platform}`);
 
 switch (platform) {
     case "win32":
@@ -19,6 +21,8 @@ switch (platform) {
         command = linuxCommand;
         break;
 }
+
+console.log(`Command to be executed: '${command}'`);
 
 if (command === "") {
     console.log(`Operating system '${platform}' is not supported.`);
