@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/parsiya/evil-electron#readme",
   "devDependencies": {
-    "electron": "^9.0.5"
+    "electron": "^9.4.0"
   }
 }
